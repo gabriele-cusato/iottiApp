@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fontCodes="clr-namespace:IottiMobileApp.FontCodes"
+             x:Class="IottiMobileApp.Views.MainPage"
+             xmlns:viewModels="clr-namespace:IottiMobileApp.ViewModels"
+             x:DataType="viewModels:MainViewModel">
+    
+    <!--per mettere colore di sfondo custom: -->
+    <!--Style="{StaticResource PageBackgroundStyle}"-->
+
+    <RefreshView x:Name="refreshView" 
+         IsRefreshing="{Binding IsRefreshing}" 
+         Refreshing="OnCheckCloudClicked2">
+
+        <ScrollView x:Name="OuterScrollView">
+            <Grid RowDefinitions="*, Auto" HeightRequest="{Binding PageHeight}">
+
+                <ScrollView HorizontalOptions="Center" VerticalOptions="Center" x:Name="InnerScrollView" Scrolled="OnInnerScrollViewScrolled" HeightRequest="600" WidthRequest="300">
+                    <Border Stroke="#512cd4" StrokeThickness="2" HeightRequest="600" WidthRequest="300">
+                        <Label x:Name="ResultEditor" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="18"/>
+                    </Border>
+                    <!--dopo cambia in VerticalStackLayout-->
+                </ScrollView>
+
+                <!-- Bottone rotondo con icona -->
+                <Button Clicked="OnOpenCameraClicked"
+                    TextColor="White"
+                    HeightRequest="55"
+                    WidthRequest="55"
+                    CornerRadius="40"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"
+                    FontFamily="FASolid"
+                    Text="{x:Static fontCodes:FASolid.Camera}"
+                    FontSize="30"
+                    Margin="10">
+                </Button>
+
+                <!-- Bottone rotondo con icona -->
+                <!--<Button Clicked="OnCheckCloudClicked"
+                TextColor="White"
+                HeightRequest="50"
+                WidthRequest="50"
+                CornerRadius="40"
+                HorizontalOptions="Start"
+                VerticalOptions="End"
+                FontFamily="FASolid"
+                Text="{x:Static models:FASolid.Cloud}"
+                FontSize="17"
+                Margin="5">
+            </Button>-->
+
+            </Grid>
+        </ScrollView>
+    </RefreshView>
+
+</ContentPage>

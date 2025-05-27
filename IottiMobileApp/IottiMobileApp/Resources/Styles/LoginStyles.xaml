@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IottiMobileApp.Resources.Styles.LoginStyles">
+
+    <!-- Colore del testo generico -->
+    <Color x:Key="TextColor">#333333</Color>
+    <Color x:Key="PrimaryColor">#007AFF</Color>
+
+    <!-- Stile per Entry -->
+    <Style x:Key="EntryStyle" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+        <Setter Property="BackgroundColor" Value="#FFFFFF" />
+        <Setter Property="PlaceholderColor" Value="#888888" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="Margin" Value="0,0,0,10" />
+    </Style>
+
+</ResourceDictionary>

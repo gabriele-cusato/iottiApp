@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="IottiMobileApp.Views.FieraPage"
+             xmlns:fontCodes="clr-namespace:IottiMobileApp.FontCodes"
+             xmlns:viewModels="clr-namespace:IottiMobileApp.ViewModels"
+             xmlns:Behaviors="clr-namespace:IottiMobileApp.Behaviors"
+             xmlns:Controls="clr-namespace:IottiMobileApp.Controls"
+             xmlns:Models="clr-namespace:DbMobileModel.Models.IntermediateDb;assembly=DbMobileModel"
+             x:DataType="viewModels:FieraViewModel"
+             Title="FieraPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles/FieraStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <RefreshView
+            Command="{Binding LoadDataCommand}"
+            IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+            RefreshColor="Gray">
+            <!-- Usa Grid al posto di StackLayout per espansione -->
+            <Grid Padding="20" RowSpacing="20" Margin="0,20,0,0">
+                <!-- Riconosce tap esterni -->
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPageTapped" />
+                </Grid.GestureRecognizers>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+                       Text="Seleziona Fiera"
+                       FontSize="20"
+                       HorizontalOptions="Start" />
+
+                <!-- Expander custom con animazioni, altezza del contenuto dinamica e scroll -->
+                <Controls:SmartExpander x:Name="SmartFieraExpander"
+                                      Grid.Row="1"
+                                      ItemsSource="{Binding FiereOP}"
+                                      SelectedItem="{Binding FieraSelezionata, Mode=TwoWay}"
+                                      DisplayMemberPath="MteSapProjectName"
+                                      PlaceholderText="Scegli una fiera"
+                                      ArrowIcon="{x:Static fontCodes:FASolid.CaretDown}"
+                                      MaxHeight="200"
+                                      ItemHeight="40"
+                                      SelectionChanged="OnSelectionChanged" />
+
+            </Grid>
+        </RefreshView>
+    </ContentPage.Content>
+
+</ContentPage>

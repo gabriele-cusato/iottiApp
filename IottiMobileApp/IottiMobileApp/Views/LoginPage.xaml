@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+             x:Class="IottiMobileApp.Views.LoginPage"  
+             xmlns:viewModels="clr-namespace:IottiMobileApp.ViewModels"
+             x:DataType="viewModels:LoginViewModel"
+             xmlns:shell="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+             shell:Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- Stile solo per Login -->
+                <ResourceDictionary Source="../Resources/Styles/LoginStyles.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*" Padding="0">
+
+        <!-- Rotellina di caricamento -->
+        <ActivityIndicator 
+            IsRunning="{Binding IsBusy}" 
+            IsVisible="{Binding IsBusy}" 
+            Color="DodgerBlue"
+            VerticalOptions="Start"
+            HorizontalOptions="Center"
+            Margin="0,40,0,0"
+            HeightRequest="40"
+            WidthRequest="40"/>
+
+        <StackLayout Grid.Row="1" Padding="30" Spacing="20" VerticalOptions="Center">
+
+            <Border
+                x:Name="LogoBorder"
+                Grid.Column="0"
+                StrokeThickness="0"
+                BackgroundColor="Transparent">
+                <Image
+                    Source="core_solution.png"
+                    WidthRequest="150"
+                    HeightRequest="150"
+                    Aspect="AspectFill"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Border>
+
+            <Label Text="Accedi"  
+               FontSize="24"  
+                   HorizontalOptions="Center"
+               TextColor="{StaticResource TextColor}" />
+
+            <Entry x:Name="UsernameEntry"  
+               Placeholder="Username"  
+               Text="{Binding Username, Mode=TwoWay}"
+               Style="{StaticResource EntryStyle}" />
+
+            <Entry x:Name="PasswordEntry"  
+               Placeholder="Password"  
+               IsPassword="True"  
+               Text="{Binding Password, Mode=TwoWay}"
+               Style="{StaticResource EntryStyle}" />
+
+            <StackLayout Orientation="Horizontal"
+                   HorizontalOptions="Center"
+                   Spacing="4">
+                <Label Text="Non hai un account?"
+               TextColor="{StaticResource TextColor}"
+               VerticalOptions="Center" />
+                <Label Text="Registrati"
+               TextColor="{StaticResource PrimaryColor}"
+               VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToRegisterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+            <Button Text="Login"  
+                Command="{Binding LoginCommand}" />
+            
+        </StackLayout>
+
+    </Grid>
+</ContentPage>

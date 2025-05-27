@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="IottiMobileApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:views="clr-namespace:IottiMobileApp.Views"
+    xmlns:fonts="clr-namespace:IottiMobileApp.FontCodes"
+    Shell.FlyoutBehavior="Flyout"
+    xmlns:appShell="clr-namespace:IottiMobileApp"
+    x:DataType="appShell:AppShell"
+    Title="IottiMobileApp">
+
+    <!-- per mettere colore di sfondo custom: -->
+    <!--Shell.BackgroundColor="{StaticResource PageBackground}"-->
+    
+    <!--guida navbar: https://youtu.be/beLL3ti-rS0?si=Nec2L1-_JYRtc6PX-->
+
+    <Shell.TitleView>
+
+        <Grid
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="Center"
+            ColumnDefinitions="*,Auto">
+
+            <!-- 1) LOGO centrato, con padding per compensare l'hamburger -->
+            <Border
+                x:Name="LogoBorder"
+                Grid.Column="0"
+                Padding="0,0,25,0"      
+                Margin="0,8,0,0"
+                StrokeThickness="0"
+                BackgroundColor="Transparent">
+                <Image
+                    Source="core_solution.png"
+                    WidthRequest="70"
+                    HeightRequest="50"
+                    Aspect="AspectFill"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Border>
+
+            <!-- 2) BOTTONE UTENTE a destra -->
+            <Button
+                Grid.Column="1"
+                Text="{Binding userImage}"
+                FontFamily="FASolid"
+                FontSize="13"
+                TextColor="White"
+                HeightRequest="40"
+                WidthRequest="40"
+                MinimumHeightRequest="20"
+                MinimumWidthRequest="20"
+                CornerRadius="40"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                Margin="0,0,8,0" /> 
+        </Grid>
+    </Shell.TitleView>
+
+    <!--questo va lasciato altrimenti darebbe errore perche non ci sono elementi fisici nell'appshell, richiama-->
+    <ShellContent
+        Route="MainPage"
+        ContentTemplate="{DataTemplate views:MainPage}" />
+
+     <!-- Header personalizzato (opzionale) -->
+    <!--<Shell.FlyoutHeader>
+        <Grid Padding="10" BackgroundColor="#ffd825">
+            <Label Text="Seleziona la pagina"
+                   TextColor="Black"
+                   FontSize="20"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+        </Grid>
+    </Shell.FlyoutHeader>-->
+
+    <!-- Menu personalizzato -->
+    <Shell.FlyoutContent>
+        <Grid RowDefinitions="*,Auto">
+            <VerticalStackLayout Padding="10" Spacing="20">
+
+                <Button
+                    Visual="Material"
+                    CornerRadius="12"
+                    HeightRequest="60"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Home"
+                    TextColor="White"
+                    FontSize="18"
+                    Clicked="OnNavigateToMainPage"
+                    ImageSource="{FontImageSource Glyph={x:Static fonts:FASolid.House}, FontFamily=FASolid, Size=20}"
+                    ContentLayout="Right,16">
+                </Button>
+
+                <Button
+                    Visual="Material"
+                    CornerRadius="12"
+                    HeightRequest="60"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Selezione fiera"
+                    TextColor="White"
+                    FontSize="18"
+                    Clicked="OnNavigateToFieraPage"
+                    ImageSource="{FontImageSource Glyph={x:Static fonts:FASolid.HouseFlag}, FontFamily=FASolid, Size=20}"
+                    ContentLayout="Right,16">
+                </Button>
+
+            </VerticalStackLayout>
+            
+            <Button
+                Visual="Material"
+                CornerRadius="12"
+                HeightRequest="60"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="End"
+                Margin="10,0,10,20"
+                Text="Logout"
+                BackgroundColor="red"
+                TextColor="White"
+                FontSize="18"
+                Clicked="onLogout"
+                ImageSource="{FontImageSource Glyph={x:Static fonts:FASolid.RightFromBracket}, FontFamily=FASolid, Size=20}"
+                ContentLayout="Right,16">
+            </Button>
+            
+        </Grid>
+    </Shell.FlyoutContent>
+
+</Shell>
