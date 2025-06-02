@@ -41,7 +41,7 @@ namespace DbMobileModel.Services
         public async Task<List<MissioneTes>?> GetAllFiereAsync()
         {
             if (_context == null) return null;
-            return await _context.MissioneTes.ToListAsync();
+            return await _context.MissioneTes.ToListAsync().ConfigureAwait(false);
         }
     }
 }

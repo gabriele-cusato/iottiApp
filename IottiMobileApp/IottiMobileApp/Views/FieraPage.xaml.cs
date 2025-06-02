@@ -30,13 +30,8 @@ public partial class FieraPage : ContentPage
         // Trova il SmartExpander nella pagina
         _smartExpander = this.FindByName<SmartExpander>("SmartFieraExpander");
 
-        // Warm-up animazioni solo se necessario
-        if (_smartExpander?.InternalExpander.Content is VisualElement content && content.IsVisible)
-        {
-            // Warm-up: animazione di 1ms per traduzione + dissolvenza
-            _ = content.TranslateTo(0, 0, 1);
-            _ = content.FadeTo(content.Opacity, 1);
-        }
+        // Non è più necessario il warm-up, il nuovo SmartExpander è autosufficiente
+        System.Diagnostics.Debug.WriteLine("FieraPage: SmartExpander trovato e pronto");
     }
 
     // Gestisce la selezione - ora viene chiamato dal SmartExpander
@@ -56,69 +51,9 @@ public partial class FieraPage : ContentPage
     // Gestisce tap esterni per chiudere l'expander
     private async void OnPageTapped(object? sender, EventArgs e)
     {
-        if (_smartExpander != null && _smartExpander.InternalExpander.IsExpanded)
+        if (_smartExpander != null && _smartExpander.IsExpanded)
         {
             await _smartExpander.CloseExpanderSafely();
-        }
-    }
-
-    // Metodi helper per controllare l'animazione dell'expander
-    private bool IsExpanderAnimating()
-    {
-        if (_smartExpander == null) return false;
-
-        var animationBehavior = _smartExpander.InternalExpander.Behaviors
-            .OfType<IottiMobileApp.Behaviors.ExpanderAnimationBehavior>()
-            .FirstOrDefault();
-        return animationBehavior?.IsAnimating ?? false;
-    }
-
-    // Metodo per gestire programmaticamente l'apertura/chiusura in modo sicuro
-    public async Task ToggleExpanderSafely(bool expand)
-    {
-        if (_smartExpander == null) return;
-
-        var expander = _smartExpander.InternalExpander;
-
-        // Non fare nulla se l'expander è già nello stato richiesto
-        if (expander.IsExpanded == expand)
-            return;
-
-        var animationBehavior = expander.Behaviors
-            .OfType<IottiMobileApp.Behaviors.ExpanderAnimationBehavior>()
-            .FirstOrDefault();
-
-        if (animationBehavior != null)
-        {
-            // Attendi che eventuali animazioni finiscano
-            var maxWait = TimeSpan.FromMilliseconds(800);
-            var checkInterval = TimeSpan.FromMilliseconds(50);
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
-            while (stopwatch.Elapsed < maxWait)
-            {
-                // Controlla se l'animazione è ancora in corso
-                if (!IsExpanderAnimating())
-                    break;
-                await Task.Delay(checkInterval);
-            }
-        }
-
-        // Cambia stato solo se non è già in animazione
-        if (!IsExpanderAnimating())
-        {
-            expander.IsExpanded = expand;
-        }
-    }
-
-    // Metodi pubblici per aprire/chiudere da codice esterno
-    public async Task OpenExpander() => await ToggleExpanderSafely(true);
-    public async Task CloseExpander() => await ToggleExpanderSafely(false);
-    public async Task ToggleExpander()
-    {
-        if (_smartExpander != null)
-        {
-            await ToggleExpanderSafely(!_smartExpander.InternalExpander.IsExpanded);
         }
     }
 }

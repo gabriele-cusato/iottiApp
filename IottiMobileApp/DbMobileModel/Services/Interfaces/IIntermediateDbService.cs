@@ -15,7 +15,7 @@ namespace DbMobileModel.Services.Interfaces
         /// </summary>
         //Task AddMerceAsync(Articoli merce);
 
-        public Task<Utente?>        GetUtenteByUsernameAsync(string username);
+        public Task<Utente?> GetUtenteByUsernameAsync(string username);
         public Task<List<MissioneTes>?> GetAllFiereAsync();
     }
 }

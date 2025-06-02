@@ -34,6 +34,7 @@ namespace IottiMobileApp.Classes
                 .AddDbContext<IntermediateDbContext>(opt =>
                     opt.UseSqlServer(config.IntermediateServerConnection))
                 .AddSingleton<IPasswordHasher, EncryptionHelper>()
+                .AddSingleton<IToastService, ToastService>()
                 .AddScoped<IRemoteAuthService, RemoteAuthService>()
                 .AddScoped<ILocalDbService, LocalDbService>()
                 .AddScoped<IIntermediateDbService, IntermediateDbService>();

@@ -4,10 +4,19 @@
              xmlns:fontCodes="clr-namespace:IottiMobileApp.FontCodes"
              x:Class="IottiMobileApp.Views.MainPage"
              xmlns:viewModels="clr-namespace:IottiMobileApp.ViewModels"
-             x:DataType="viewModels:MainViewModel">
-    
+             x:DataType="viewModels:MainViewModel"
+             ControlTemplate="{StaticResource ToastPageTemplate}">
+
     <!--per mettere colore di sfondo custom: -->
     <!--Style="{StaticResource PageBackgroundStyle}"-->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Templates/ToastControlTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <RefreshView x:Name="refreshView" 
          IsRefreshing="{Binding IsRefreshing}" 

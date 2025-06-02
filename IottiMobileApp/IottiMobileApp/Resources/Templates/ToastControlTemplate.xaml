@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:fontCodes="clr-namespace:IottiMobileApp.FontCodes">
+
+    <ControlTemplate x:Key="ToastPageTemplate">
+        <Grid>
+            <!-- Layout principale -->
+            <Grid RowDefinitions="Auto,*,Auto">
+
+                <!-- Header (opzionale) -->
+                <Border Grid.Row="0" 
+                        BackgroundColor="#2196F3" 
+                        Padding="16,10"
+                        IsVisible="False">
+                    <Label Text="La Mia App" 
+                           TextColor="White" 
+                           FontSize="18" 
+                           HorizontalOptions="Center"/>
+                </Border>
+
+                <!-- Contenuto della pagina -->
+                <ContentPresenter Grid.Row="1" />
+
+                <!-- Footer (opzionale) -->
+                <Border Grid.Row="2" 
+                        BackgroundColor="#E0E0E0" 
+                        Padding="10"
+                        IsVisible="False">
+                    <Label Text="© 2025 IottiApp" 
+                           FontSize="12" 
+                           HorizontalOptions="Center"/>
+                </Border>
+            </Grid>
+
+            <!-- Toast Overlay - Design Migliorato -->
+            <Border x:Name="ToastBorder"
+                    BackgroundColor="White"
+                    Stroke="Transparent"
+                    StrokeThickness="0"
+                    Padding="20,16"
+                    WidthRequest="380"
+                    HeightRequest="90"
+                    IsVisible="False"
+                    Opacity="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"
+                    Margin="20,0,20,60">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16"/>
+                </Border.StrokeShape>
+
+                <!-- Shadow migliorato per profondità -->
+                <Border.Shadow>
+                    <Shadow Brush="Black" 
+                            Opacity="0.15" 
+                            Radius="12" 
+                            Offset="0,4"/>
+                </Border.Shadow>
+
+                <!-- Gradient background per modernità -->
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#FFFFFF" Offset="0.0"/>
+                        <GradientStop Color="#FAFAFA" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
+
+                    <!-- Icona con design migliorato -->
+                    <Border Grid.Column="0"
+                            x:Name="IconBorder"
+                            BackgroundColor="#2196F3"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12"/>
+                        </Border.StrokeShape>
+
+                        <!-- Gradient per l'icona -->
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop x:Name="IconGradientStart" Color="#2196F3" Offset="0.0"/>
+                                <GradientStop x:Name="IconGradientEnd" Color="#1976D2" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <Label x:Name="IconLabel"
+                               Text="{x:Static fontCodes:FASolid.Info}"
+                               FontFamily="FASolid"
+                               FontSize="16"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Border>
+
+                    <!-- Testo del messaggio con typography migliorata -->
+                    <StackLayout Grid.Column="1" 
+                                 VerticalOptions="Center"
+                                 Spacing="2">
+                        <Label x:Name="MessageLabel"
+                               Text=""
+                               FontSize="15"
+                               TextColor="#1A1A1A"
+                               FontAttributes="Bold"
+                               LineBreakMode="WordWrap"
+                               MaxLines="2"/>
+                        <Label Text="Tocca per chiudere"
+                               FontSize="12"
+                               TextColor="#666666"
+                               Opacity="0.8"/>
+                    </StackLayout>
+
+                    <!-- Indicatore di chiusura -->
+                    <Label Grid.Column="2"
+                           Text="{x:Static fontCodes:FASolid.Xmark}"
+                           FontFamily="FASolid"
+                           FontSize="12"
+                           TextColor="#999999"
+                           VerticalOptions="Start"
+                           HorizontalOptions="End"
+                           Margin="0,4,0,0"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
+</ResourceDictionary>

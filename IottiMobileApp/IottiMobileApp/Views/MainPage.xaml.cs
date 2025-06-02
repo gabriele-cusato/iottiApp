@@ -4,16 +4,27 @@ namespace IottiMobileApp.Views
 {
     public partial class MainPage : ContentPage
     {
+        // Costruttore “vero” in DI
+        private readonly MainViewModel _viewModel;
+
         public MainPage()
         : this(App.Services.GetRequiredService<MainViewModel>())
         {
         }
 
-        // 2) Costruttore “vero” in DI
-        public MainPage(MainViewModel vm)
+        public MainPage(MainViewModel viewModel)
         {
             InitializeComponent();
-            BindingContext = vm;
+            _viewModel = viewModel;
+            BindingContext = viewModel;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // Chiamata al toast quando la pagina appare
+            await _viewModel.OnPageLoadedAsync();
         }
 
         private void OnInnerScrollViewScrolled(object sender, ScrolledEventArgs e)

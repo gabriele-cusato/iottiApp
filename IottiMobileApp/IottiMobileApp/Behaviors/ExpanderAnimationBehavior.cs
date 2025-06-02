@@ -188,7 +188,7 @@ namespace IottiMobileApp.Behaviors
             {
                 // Cancella animazioni precedenti
                 content.CancelAnimations();
-                var arrow = expander.FindByName<Label>("ArrowLabel");
+                Label? arrow = FindArrowLabel(expander);
                 arrow?.CancelAnimations();
 
                 if (isExpanding)
@@ -248,6 +248,36 @@ namespace IottiMobileApp.Behaviors
 
             // Riabilita input
             content.InputTransparent = false;
+        }
+
+        private Label? FindArrowLabel(Expander expander)
+        {
+            try
+            {
+                // Cerca nell'header dell'expander
+                if (expander.Header is Border headerBorder &&
+                    headerBorder.Content is Grid headerGrid)
+                {
+                    // Cerca una Label con FontFamily="FASolid" (caratteristica della freccia)
+                    foreach (var child in headerGrid.Children)
+                    {
+                        if (child is Label label &&
+                            label.FontFamily == "FASolid" &&
+                            Grid.GetColumn(label) == 1) // La freccia è sempre nella colonna 1
+                        {
+                            return label;
+                        }
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine("Arrow label non trovata nell'header");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Errore ricerca arrow label: {ex.Message}");
+            }
+
+            return null;
         }
 
         //animazione per il collapse del picker

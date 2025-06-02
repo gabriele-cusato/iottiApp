@@ -19,7 +19,7 @@
     <Shell.TitleView>
 
         <Grid
-            HorizontalOptions="FillAndExpand"
+            HorizontalOptions="Fill"
             VerticalOptions="Center"
             ColumnDefinitions="*,Auto">
 
@@ -54,7 +54,7 @@
                 CornerRadius="40"
                 HorizontalOptions="End"
                 VerticalOptions="Center"
-                Margin="0,0,8,0" /> 
+                Margin="0,0,8,0" />
         </Grid>
     </Shell.TitleView>
 
@@ -83,7 +83,7 @@
                     Visual="Material"
                     CornerRadius="12"
                     HeightRequest="60"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="Fill"
                     Text="Home"
                     TextColor="White"
                     FontSize="18"
@@ -96,7 +96,7 @@
                     Visual="Material"
                     CornerRadius="12"
                     HeightRequest="60"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="Fill"
                     Text="Selezione fiera"
                     TextColor="White"
                     FontSize="18"
@@ -106,12 +106,12 @@
                 </Button>
 
             </VerticalStackLayout>
-            
+
             <Button
                 Visual="Material"
                 CornerRadius="12"
                 HeightRequest="60"
-                HorizontalOptions="FillAndExpand"
+                HorizontalOptions="Fill"
                 VerticalOptions="End"
                 Margin="10,0,10,20"
                 Text="Logout"
@@ -122,7 +122,7 @@
                 ImageSource="{FontImageSource Glyph={x:Static fonts:FASolid.RightFromBracket}, FontFamily=FASolid, Size=20}"
                 ContentLayout="Right,16">
             </Button>
-            
+
         </Grid>
     </Shell.FlyoutContent>
 

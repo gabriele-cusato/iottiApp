@@ -5,22 +5,29 @@ using CommunityToolkit.Mvvm.Input;
 using DbMobileModel.Models.IntermediateDb;
 using DbMobileModel.Services.Interfaces;
 using IottiMobileApp.Classes;
+using IottiMobileApp.Views;
+using Microsoft.Data.SqlClient;
 
 namespace IottiMobileApp.ViewModels
 {
     public partial class FieraViewModel : ObservableObject
     {
         private readonly IIntermediateDbService _intermediateDbService;
+        private readonly IToastService _toastService;
+        private readonly ConditionChecker _conditionChecker;
 
-        public FieraViewModel(IIntermediateDbService intermediateDbService)
+        public FieraViewModel(IIntermediateDbService intermediateDbService, IToastService toastService)
         {
             _intermediateDbService = intermediateDbService;
+            _toastService = toastService;
+            _conditionChecker = new ConditionChecker(toastService);
 
             // Carica dalla sessione prima di caricare i dati
             LoadFromSession();
 
             // Avvia il caricamento in modo sicuro
             _ = LoadDataAsync();
+
         }
 
         [ObservableProperty]
@@ -31,6 +38,23 @@ namespace IottiMobileApp.ViewModels
 
         [ObservableProperty]
         bool isRefreshing;
+
+        [RelayCommand]
+        private async Task CallToastAsync()
+        {
+            System.Diagnostics.Debug.WriteLine("🔥 BUTTON CLICKED - START");
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("🔥 Calling ShowInfoAsync...");
+                await _toastService.ShowSuccessAsync("Benvenuto!");
+                System.Diagnostics.Debug.WriteLine("🔥 ShowInfoAsync COMPLETED");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"🔥 ERROR: {ex.Message}");
+            }
+        }
 
         [RelayCommand]
         private async Task LoadDataAsync()
@@ -47,10 +71,28 @@ namespace IottiMobileApp.ViewModels
                     foreach (var fiera in listaFiere)
                         FiereOP.Add(fiera);
                 }
+                else
+                {
+                    await _toastService.ShowWarningAsync("Nessuna fiera trovata nel database");
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                // Errore specifico del database SQL Server
+                Console.WriteLine("Errore SQL: " + sqlEx);
+                await _toastService.ShowErrorAsync("Database non raggiungibile. Verificare la connessione al server.");
+            }
+            catch (InvalidOperationException invEx)
+            {
+                // Errore di connessione/configurazione database
+                Console.WriteLine("Errore connessione DB: " + invEx);
+                await _toastService.ShowErrorAsync("Errore di configurazione database. Contattare l'amministratore.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("errore: " + ex);
+                // Altri errori generici
+                Console.WriteLine("Errore generico: " + ex);
+                await _toastService.ShowErrorAsync($"Errore durante il caricamento dei dati: {ex.Message}");
             }
             finally
             {

@@ -20,10 +20,8 @@ namespace IottiMobileApp.ViewModels
 
         [ObservableProperty]
         public string? username;
-
         [ObservableProperty]
         public string? password;
-
         [ObservableProperty]
         public bool isBusy;
 
@@ -35,9 +33,7 @@ namespace IottiMobileApp.ViewModels
 
         //public LoginViewModel()
         //{
-
         //}
-
         /*
             verrà prodotto in automatico del codice come questo:
             public string Username
@@ -47,22 +43,20 @@ namespace IottiMobileApp.ViewModels
             }
             quindi poi quando si vanno ad utilizzare questi attributi bisogna indicarli con la prima lettera maiuscola
          */
-
         //questi attributi devono rimanere separati dai DTO:
         /*
          * i ViewModel gestiscono lo stato e la logica di presentazione, mentre i DTO servono solo a trasferire dati tra strati
-         * sono POCO privi di logica di binding, e farli diventare “observable” li renderebbe contaminati da responsabilità di UI 
+         * sono POCO privi di logica di binding, e farli diventare "observable" li renderebbe contaminati da responsabilità di UI 
          */
-        
+
         [RelayCommand]
         public async Task LoginAsync()
         {
             IsBusy = true;
-
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
             {
                 IsBusy = false;
-                await Shell.Current.DisplayAlert("Errore", "Valorizzare tuti i valori", "OK");
+                await Shell.Current.DisplayAlert("Errore", "Valorizzare tutti i valori", "OK");
                 return;
             }
 
@@ -73,13 +67,15 @@ namespace IottiMobileApp.ViewModels
             };
 
             Utente? user = await _authService.LoginAsync(loginDto);
-
             if (user != null)
             {
                 UserSession.UtenteCorrente = user;
                 Preferences.Set("IsLoggedIn", true);
                 Preferences.Set("Username", user.UtnUsername);
-                Application.Current!.Windows[0].Page = new AppShell(); //caricando appshell si carica anche la pagina principale, è scitto all'interno del suo xaml
+
+                // Crea AppShell con ToastService
+                var appShell = new AppShell();
+                Application.Current!.Windows[0].Page = appShell;
             }
             else
             {
